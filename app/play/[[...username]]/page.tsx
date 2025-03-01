@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartoonGlobe from '@/components/CartoonGlobe';
@@ -9,16 +9,11 @@ import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
 export default function PlayPage({ params }: { params: { username?: string[] } }) {
   const router = useRouter();
   const [playerName, setPlayerName] = useState('');
-  
-  useEffect(() => {
-    if (params.username && params.username.length > 0) {
-      router.push(`/quiz/${params.username[0]}`);
-    }
-  }, [params.username, router]);
 
-  const handleStartGame = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (playerName.trim()) {
-      router.push(`/quiz/${playerName}`);
+      router.push(`/quiz/${playerName.trim().toLowerCase()}`);
     }
   };
 
@@ -40,26 +35,29 @@ export default function PlayPage({ params }: { params: { username?: string[] } }
           
           <h1 className="font-bubblegum text-3xl text-center mb-6">Travel Quiz Challenge</h1>
           
-          <div className="mb-6">
-            <label htmlFor="username" className="block text-lg font-bold mb-2">
-              Enter your name to start
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="cartoon-input w-full"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              placeholder="Your name"
-            />
-          </div>
-          
-          <button
-            onClick={handleStartGame}
-            className="cartoon-button w-full bg-cartoon-yellow"
-          >
-            Start Game
-          </button>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label htmlFor="username" className="block text-lg font-bold mb-2">
+                Enter your name to start
+              </label>
+              <input
+                type="text"
+                id="username"
+                className="cartoon-input w-full"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                placeholder="Your name"
+                required
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className="cartoon-button w-full bg-cartoon-yellow"
+            >
+              Start Game
+            </button>
+          </form>
           
           <div className="mt-6 text-center">
             <Link href="/" className="text-blue-600 hover:underline">
