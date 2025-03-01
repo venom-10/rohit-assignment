@@ -242,13 +242,21 @@ export default function QuizPage({ params }: { params: { username: string } }) {
               
               <button
                 onClick={handleNextQuestion}
-                className={`cartoon-button w-full text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5 
-                  ${gameState.currentQuestionIndex === 9 ? 'bg-cartoon-purple' : 'bg-cartoon-blue'}`}
+                className="cartoon-button w-full bg-cartoon-blue text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5"
               >
-                {gameState.currentQuestionIndex === 9 ? 'Show Results' : 'Next Question'}
+                Next Question
               </button>
             </div>
           )}
+          
+          <div className="mt-8 pt-6 border-t-4 border-black">
+            <button
+              onClick={handleShareChallenge}
+              className="cartoon-button w-full bg-cartoon-purple text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5"
+            >
+              Challenge a Friend
+            </button>
+          </div>
           
           <div className="mt-6 text-center">
             <Link href="/" className="text-blue-600 hover:underline text-base md:text-lg lg:text-xl">

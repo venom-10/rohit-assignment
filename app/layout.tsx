@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Travel Quiz Challenge',
+  title: 'GlobeTrotter',
   description: 'Test your knowledge of world destinations and challenge your friends!',
 }
 

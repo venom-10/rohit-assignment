@@ -33,7 +33,7 @@ export default function PlayPage() {
             <CartoonGlobe className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40" />
           </div>
           
-          <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl text-center mb-6 md:mb-8">Travel Quiz Challenge</h1>
+          <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl text-center mb-6 md:mb-8">GlobeTrotter</h1>
           
           <form onSubmit={handleSubmit}>
             <div className="mb-6 md:mb-8">

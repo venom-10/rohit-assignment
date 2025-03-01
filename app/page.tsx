@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           
           <div className="mt-16 md:mt-20 lg:mt-24 text-center">
-            <h1 className="font-bubblegum text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-2 text-black">Travel Quiz Challenge</h1>
+            <h1 className="font-bubblegum text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-2 text-black">GlobeTrotter</h1>
             <div className="relative">
               <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-700">Test your knowledge of world destinations!</p>
               <div className="absolute -right-8 -top-4 rotate-12">
