@@ -13,22 +13,22 @@ export async function PUT(request: Request) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error: updateError } = await supabase
       .from('users')
       .update({ score })
       .eq('id', userId)
       .select('username, score')
       .single();
 
-    if (error) throw error;
+    if (updateError) throw updateError;
 
     return NextResponse.json({
       message: 'Score updated successfully',
       user: data
     });
-  } catch (error) {
+  } catch (err: any) {
     return NextResponse.json(
-      { error: 'Failed to update score' },
+      { error: err.message || 'Failed to update score' },
       { status: 500 }
     );
   }

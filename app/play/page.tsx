@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartoonGlobe from '@/components/CartoonGlobe';
 import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
-import type { User } from '@/types';
 
 export default function PlayPage() {
   const router = useRouter();
