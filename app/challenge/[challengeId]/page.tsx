@@ -5,29 +5,26 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartoonGlobe from '@/components/CartoonGlobe';
 import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
-import type { Challenge } from '@/types';
+import { destinations } from '@/data/destination';
+
+interface ChallengeData {
+  challenger: string;
+  score: number;
+  questions: number[];
+}
 
 export default function ChallengePage({ 
   params 
 }: { 
   params: { 
-    username: string; 
-    challengeId: string; 
-    score: string;
+    challengeId: string;
   } 
 }) {
   const router = useRouter();
   const [playerName, setPlayerName] = useState('');
+  const [challengeData, setChallengeData] = useState<ChallengeData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   
-  const challengerName = params.username;
-  const challengerScore = parseInt(params.score || '0', 10);
-  
-  const handleStartGame = () => {
-    if (playerName.trim()) {
-      router.push(`/quiz/${playerName.trim().toLowerCase()}?challengeId=${params.challengeId}&challengerScore=${challengerScore}`);
-    }
-  };
-
   useEffect(() => {
     const fetchChallenge = async () => {
       try {
@@ -36,16 +33,44 @@ export default function ChallengePage({
         
         if (!res.ok) throw new Error(data.error);
         
+        // Get the specific questions using question numbers
+        const challengeQuestions = data.questions.map(
+          (questionNo: number) => destinations.find(d => d.questionNo === questionNo)
+        ).filter(Boolean);
+
         // Store challenge data for the quiz
-        localStorage.setItem('currentChallenge', JSON.stringify(data));
+        localStorage.setItem('currentChallenge', JSON.stringify({
+          ...data,
+          questions: challengeQuestions
+        }));
+
+        setChallengeData(data);
       } catch (err) {
         console.error('Error fetching challenge:', err);
         router.push('/');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchChallenge();
   }, [params.challengeId, router]);
+
+  const handleStartGame = () => {
+    if (playerName.trim()) {
+      router.push(`/quiz/${playerName.trim().toLowerCase()}?challengeId=${params.challengeId}`);
+    }
+  };
+
+  if (isLoading || !challengeData) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-2xl md:text-3xl lg:text-4xl font-bubblegum animate-bounce">
+          Loading...
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -71,13 +96,13 @@ export default function ChallengePage({
             <p className="text-center text-lg md:text-xl lg:text-2xl font-bold">
               You've been challenged by{' '}
               <span className="font-bubblegum text-xl md:text-2xl lg:text-3xl">
-                {challengerName}
+                {challengeData.challenger}
               </span>!
             </p>
             <p className="text-center mt-2 md:mt-3 lg:mt-4">
               Their score:{' '}
               <span className="font-bubblegum text-xl md:text-2xl lg:text-3xl">
-                {challengerScore}/10
+                {challengeData.score}/10
               </span>
             </p>
           </div>

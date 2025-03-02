@@ -127,14 +127,14 @@ export default function QuizPage({ params }: { params: { username: string } }) {
         body: JSON.stringify({
           challenger_id: userId,
           score: gameState.score,
-          questions: gameState.questions.map((_, i) => i) // Store question indices
+          questions: gameState.questions.map(q => q.questionNo) // Use questionNo instead of index
         })
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      const shareUrl = `${window.location.origin}/challenge/${playerName}/${data.challengeId}/${gameState.score}`;
+      const shareUrl = `${window.location.origin}/challenge/${data.challengeId}`;
       
       await navigator.clipboard.writeText(shareUrl);
       alert('Challenge link copied to clipboard! Share it with your friends.');

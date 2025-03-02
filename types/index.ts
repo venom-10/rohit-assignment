@@ -5,7 +5,8 @@ export interface User {
 
 export interface Challenge {
   id: string;
-  challenger: string;
+  challenger_id: string;
   score: number;
   questions: number[];
+  created_at?: Date;
 } 
