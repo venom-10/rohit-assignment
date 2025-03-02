@@ -5,15 +5,37 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartoonGlobe from '@/components/CartoonGlobe';
 import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
+import type { User } from '@/types';
 
 export default function PlayPage() {
   const router = useRouter();
   const [playerName, setPlayerName] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (playerName.trim()) {
-      router.push(`/quiz/${playerName.trim().toLowerCase()}`);
+    setError('');
+
+    try {
+      const res = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: playerName.trim() })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to register');
+      }
+
+      // Store user data in localStorage
+      localStorage.setItem('userId', data.id);
+      localStorage.setItem('username', data.username);
+
+      router.push(`/quiz/${data.username}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
     }
   };
 

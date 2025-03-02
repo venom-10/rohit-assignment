@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Destination, destinations } from '@/data/destination';
 import CartoonGlobe from '@/components/CartoonGlobe';
 import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
+import type { Challenge } from '@/types';
 
 interface GameState {
   score: number;
@@ -66,14 +67,14 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     return destination.fun_fact[randomIndex];
   };
 
-  const handleAnswer = (answer: string) => {
+  const handleAnswer = async (answer: string) => {
     if (gameState.answered) return;
-    
+
     const correctAnswer = gameState.currentDestination 
       ? `${gameState.currentDestination.city}, ${gameState.currentDestination.country}` 
       : '';
     
-    const isCorrect = answer === correctAnswer;
+    const isCorrect = answer.toLowerCase() === correctAnswer.toLowerCase();
     
     if (isCorrect) {
       confetti({
@@ -83,12 +84,15 @@ export default function QuizPage({ params }: { params: { username: string } }) {
         colors: ['#FFE15D', '#7BD3EA', '#FF9EAA', '#A6CF98', '#D09CFA']
       });
     }
-    
+
     setGameState(prev => ({
       ...prev,
       score: isCorrect ? prev.score + 1 : prev.score,
       answered: true,
       isCorrect,
+      funFact: gameState.currentDestination?.fun_fact[
+        Math.floor(Math.random() * gameState.currentDestination.fun_fact.length)
+      ] || ''
     }));
   };
 
@@ -112,18 +116,32 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     }));
   };
 
-  const handleShareChallenge = () => {
-    const challengeId = uuidv4();
-    const shareUrl = `${window.location.origin}/challenge/${playerName}/${challengeId}/${gameState.score}`;
-    
-    navigator.clipboard.writeText(shareUrl)
-      .then(() => {
-        alert('Challenge link copied to clipboard! Share it with your friends.');
-      })
-      .catch(err => {
-        console.error('Failed to copy: ', err);
-        alert('Share this link with your friends: ' + shareUrl);
+  const handleShareChallenge = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) throw new Error('User not found');
+
+      const res = await fetch('/api/challenge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          challenger_id: userId,
+          score: gameState.score,
+          questions: gameState.questions.map((_, i) => i) // Store question indices
+        })
       });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      const shareUrl = `${window.location.origin}/challenge/${playerName}/${data.challengeId}/${gameState.score}`;
+      
+      await navigator.clipboard.writeText(shareUrl);
+      alert('Challenge link copied to clipboard! Share it with your friends.');
+    } catch (err) {
+      console.error('Error creating challenge:', err);
+      alert('Failed to create challenge. Please try again.');
+    }
   };
 
   if (!gameState.currentDestination && !gameState.isGameComplete) {
@@ -242,9 +260,10 @@ export default function QuizPage({ params }: { params: { username: string } }) {
               
               <button
                 onClick={handleNextQuestion}
-                className="cartoon-button w-full bg-cartoon-blue text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5"
+                className={`cartoon-button w-full text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5 
+                  ${gameState.currentQuestionIndex === 9 ? 'bg-cartoon-purple' : 'bg-cartoon-blue'}`}
               >
-                Next Question
+                {gameState.currentQuestionIndex === 9 ? 'Show Results' : 'Next Question'}
               </button>
             </div>
           )}

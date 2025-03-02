@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CartoonGlobe from '@/components/CartoonGlobe';
 import { CartoonStar, CartoonCircle } from '@/components/CartoonElements';
+import type { Challenge } from '@/types';
 
 export default function ChallengePage({ 
   params 
@@ -26,6 +27,25 @@ export default function ChallengePage({
       router.push(`/quiz/${playerName.trim().toLowerCase()}?challengeId=${params.challengeId}&challengerScore=${challengerScore}`);
     }
   };
+
+  useEffect(() => {
+    const fetchChallenge = async () => {
+      try {
+        const res = await fetch(`/api/challenge/${params.challengeId}`);
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error);
+        
+        // Store challenge data for the quiz
+        localStorage.setItem('currentChallenge', JSON.stringify(data));
+      } catch (err) {
+        console.error('Error fetching challenge:', err);
+        router.push('/');
+      }
+    };
+
+    fetchChallenge();
+  }, [params.challengeId, router]);
 
   return (
     <main className="min-h-screen relative overflow-hidden">
