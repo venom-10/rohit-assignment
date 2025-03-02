@@ -27,10 +27,14 @@ export default function PlayPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to register');
+        if (res.status === 409) {
+          setError('This username is already taken. Please choose another one.');
+        } else {
+          throw new Error(data.error || 'Failed to register');
+        }
+        return;
       }
 
-      // Store user data in localStorage
       localStorage.setItem('userId', data.id);
       localStorage.setItem('username', data.username);
 
@@ -53,40 +57,48 @@ export default function PlayPage() {
       </div>
       
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="cartoon-card max-w-md w-full bg-white md:max-w-lg lg:max-w-2xl">
-          <div className="flex justify-center mb-6 md:mb-8">
-            <CartoonGlobe className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40" />
+        <div className="cartoon-card max-w-sm w-full bg-white md:max-w-md lg:max-w-lg">
+          <div className="flex justify-center mb-4 md:mb-6">
+            <CartoonGlobe className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" />
           </div>
           
-          <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl text-center mb-6 md:mb-8">GlobeTrotter</h1>
+          <h1 className="font-bubblegum text-2xl md:text-3xl lg:text-4xl text-center mb-4 md:mb-6">
+            GlobeTrotter
+          </h1>
           
           <form onSubmit={handleSubmit}>
-            <div className="mb-6 md:mb-8">
-              <label htmlFor="username" className="block text-lg md:text-xl lg:text-2xl font-bold mb-2 md:mb-3">
+            <div className="mb-4 md:mb-6">
+              <label htmlFor="username" className="block text-base md:text-lg lg:text-xl font-bold mb-2">
                 Enter your name to start
               </label>
               <input
                 type="text"
                 id="username"
-                className="cartoon-input w-full text-lg md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5 outline-none focus:outline-none focus:ring-0 focus:border-black"
+                className={`cartoon-input w-full text-base md:text-lg lg:text-xl py-2 md:py-3 outline-none focus:outline-none focus:ring-0 
+                  ${error ? 'border-red-500' : 'border-black'}`}
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 placeholder="Your name"
                 required
               />
+              {error && (
+                <p className="mt-2 text-red-500 text-sm md:text-base">
+                  {error}
+                </p>
+              )}
             </div>
             
             <button
               type="submit"
               disabled={isLoading}
-              className="cartoon-button w-full bg-cartoon-yellow text-base md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5"
+              className="cartoon-button w-full bg-cartoon-yellow text-sm md:text-base lg:text-lg py-2 md:py-3"
             >
               {isLoading ? 'Creating Player...' : 'Start Game'}
             </button>
           </form>
           
-          <div className="mt-6 md:mt-8 text-center">
-            <Link href="/" className="text-blue-600 hover:underline text-base md:text-lg lg:text-xl">
+          <div className="mt-4 md:mt-6 text-center">
+            <Link href="/" className="text-blue-600 hover:underline text-sm md:text-base lg:text-lg">
               Back to Home
             </Link>
           </div>

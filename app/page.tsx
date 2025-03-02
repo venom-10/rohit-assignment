@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <main className="min-h-screen relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-10 left-10 animate-float sm:top-20 sm:left-20 lg:top-32 lg:left-32">
-        <CartoonCloud className="w-24 h-16 md:w-32 md:h-24 lg:w-40 lg:h-32" />
+      <div className="absolute top-8 left-8 animate-float sm:top-12 sm:left-12 lg:top-16 lg:left-16">
+        <CartoonCloud className="w-16 h-12 md:w-20 md:h-16 lg:w-24 lg:h-20" />
       </div>
       <div className="absolute bottom-20 right-10 animate-float sm:bottom-32 sm:right-20 lg:bottom-40 lg:right-32" style={{ animationDelay: '1s' }}>
         <CartoonCloud className="w-20 h-12 md:w-28 md:h-20 lg:w-36 lg:h-24" />
@@ -26,15 +26,15 @@ export default function Home() {
       </div>
       
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="cartoon-card max-w-md w-full bg-white relative md:max-w-lg lg:max-w-2xl xl:max-w-3xl">
-          <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 animate-float">
-            <CartoonGlobe className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48" />
+        <div className="cartoon-card max-w-sm w-full bg-white relative md:max-w-md lg:max-w-lg">
+          <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 animate-float">
+            <CartoonGlobe className="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32" />
           </div>
           
-          <div className="mt-16 md:mt-20 lg:mt-24 text-center">
-            <h1 className="font-bubblegum text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-2 text-black">GlobeTrotter</h1>
+          <div className="mt-12 md:mt-16 lg:mt-20 text-center">
+            <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl mb-2">GlobeTrotter</h1>
             <div className="relative">
-              <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-700">Test your knowledge of world destinations!</p>
+              <p className="text-base md:text-lg lg:text-xl mb-6">Test your knowledge of world destinations!</p>
               <div className="absolute -right-8 -top-4 rotate-12">
                 <CartoonStar className="w-10 h-10 md:w-14 md:h-14 lg:w-20 lg:h-20" />
               </div>

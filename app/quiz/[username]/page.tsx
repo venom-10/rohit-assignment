@@ -186,31 +186,34 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     return (
       <main className="min-h-screen relative overflow-hidden">
         <div className="flex flex-col items-center justify-center min-h-screen p-4">
-          <div className="cartoon-card max-w-md w-full bg-white md:max-w-lg lg:max-w-2xl">
-            <div className="text-center mb-8">
-              <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl mb-4">Quiz Complete!</h1>
-              <div className="bg-cartoon-yellow border-4 border-black rounded-xl p-4 md:p-6 lg:p-8 mb-6">
-                <p className="text-xl md:text-2xl lg:text-3xl font-bold">
+          <div className="cartoon-card max-w-sm w-full bg-white md:max-w-md lg:max-w-lg">
+            <div className="text-center mb-4">
+              <h1 className="font-bubblegum text-2xl md:text-3xl lg:text-4xl mb-3">Quiz Complete!</h1>
+              <div className="bg-cartoon-yellow border-2 border-black rounded-xl p-3 md:p-4 lg:p-5 mb-4">
+                <p className="text-lg md:text-xl lg:text-2xl font-bold">
                   Your Score: <span className="font-bubblegum">{gameState.score}/10</span>
                 </p>
                 {gameState.score === 10 && (
-                  <p className="mt-4 text-lg md:text-xl lg:text-2xl">
+                  <p className="mt-3 text-base md:text-lg lg:text-xl">
                     🎉 Perfect Score! You're a geography genius! 🎉
                   </p>
                 )}
               </div>
             </div>
 
-            <button
-              onClick={handleShareChallenge}
-              disabled={isCreatingChallenge}
-              className="cartoon-button w-full bg-cartoon-purple text-base md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5 mb-4"
-            >
-              {isCreatingChallenge ? 'Creating Challenge...' : 'Challenge Friends'}
-            </button>
+            {/* Only show Challenge Friends button for registered users */}
+            {playerName !== 'guest' && (
+              <button
+                onClick={handleShareChallenge}
+                disabled={isCreatingChallenge}
+                className="cartoon-button w-full bg-cartoon-purple text-sm md:text-base lg:text-lg py-2 md:py-3 mb-3"
+              >
+                {isCreatingChallenge ? 'Creating Challenge...' : 'Challenge Friends'}
+              </button>
+            )}
 
             <Link href="/" className="block">
-              <button className="cartoon-button w-full bg-cartoon-yellow text-base md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5">
+              <button className="cartoon-button w-full bg-cartoon-yellow text-sm md:text-base lg:text-lg py-2 md:py-3">
                 Play Again
               </button>
             </Link>
@@ -222,92 +225,85 @@ export default function QuizPage({ params }: { params: { username: string } }) {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      {/* Decorative elements - made larger and spread out more */}
-      <div className="absolute top-20 right-20 animate-wiggle sm:top-32 sm:right-32 lg:top-40 lg:right-48">
-        <CartoonStar className="w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32" />
+      {/* Decorative elements - made smaller */}
+      <div className="absolute top-10 right-10 animate-wiggle sm:top-16 sm:right-16">
+        <CartoonStar className="w-10 h-10 md:w-14 md:h-14 lg:w-20 lg:h-20" />
       </div>
-      <div className="absolute bottom-40 left-20 animate-bounce-slow sm:bottom-60 sm:left-32 lg:bottom-80 lg:left-48">
-        <CartoonCircle className="w-12 h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 bg-cartoon-pink" />
+      <div className="absolute bottom-20 left-10 animate-bounce-slow sm:bottom-32 sm:left-16">
+        <CartoonCircle className="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-cartoon-pink" />
       </div>
       
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="cartoon-card max-w-md w-full bg-white md:max-w-lg lg:max-w-2xl xl:max-w-3xl">
-          <div className="flex justify-between items-center mb-8">
+        <div className="cartoon-card max-w-sm w-full bg-white md:max-w-md lg:max-w-lg">
+          {/* Header section */}
+          <div className="flex justify-between items-center mb-4">
             <div className="flex items-center">
-              <CartoonGlobe className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 mr-3" />
-              <h1 className="font-bubblegum text-2xl md:text-3xl lg:text-5xl">Travel Quiz</h1>
+              <CartoonGlobe className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 mr-2" />
+              <h1 className="font-bubblegum text-lg md:text-xl lg:text-2xl">Travel Quiz</h1>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="cartoon-badge bg-cartoon-blue md:text-xl lg:text-3xl p-3 lg:p-4">
+            <div className="flex items-center gap-2">
+              <div className="cartoon-badge bg-cartoon-blue text-sm md:text-base lg:text-lg p-2">
                 <span className="font-bold">Q{gameState.currentQuestionIndex + 1}/10</span>
               </div>
-              <div className="cartoon-badge bg-cartoon-yellow md:text-xl lg:text-3xl p-3 lg:p-4">
-                <span className="font-bold">{gameState.score}/{gameState.questions.length}</span>
-              </div>
             </div>
           </div>
-          
-          <div className="mb-8">
-            <p className="text-lg md:text-xl lg:text-3xl font-bold">Player: {playerName}</p>
-          </div>
-          
-          <div className="bg-cartoon-blue border-2 border-black rounded-xl p-4 md:p-6 lg:p-8 mb-8">
-            <h2 className="text-xl md:text-2xl lg:text-4xl font-bubblegum mb-4">Where is this place?</h2>
+
+          {/* Question section */}
+          <div className="bg-cartoon-blue border-2 border-black rounded-xl p-2 md:p-3 lg:p-4 mb-4">
+            <h2 className="text-base md:text-lg lg:text-xl font-bubblegum mb-2">Where is this place?</h2>
             {gameState.currentDestination?.clues.map((clue, index) => (
-              <p key={index} className="text-black mb-3 lg:mb-4 flex items-start text-base md:text-lg lg:text-2xl">
-                <span className="inline-block mr-3">•</span> {clue}
+              <p key={index} className="text-black mb-2 flex items-start text-sm md:text-base lg:text-lg">
+                <span className="inline-block mr-2">•</span> {clue}
               </p>
             ))}
           </div>
-          
+
+          {/* Answer buttons */}
           {!gameState.answered ? (
-            <div className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 mb-8">
+            <div className="grid grid-cols-1 gap-2 md:gap-3 mb-4">
               {gameState.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  className="cartoon-button bg-white hover:bg-cartoon-yellow text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5"
+                  className="cartoon-button bg-white hover:bg-cartoon-yellow text-sm md:text-base lg:text-lg py-2 md:py-3"
                 >
                   {option}
                 </button>
               ))}
             </div>
           ) : (
-            <div className="mb-8">
-              <div className={`p-4 md:p-6 lg:p-8 rounded-xl border-4 border-black mb-4 ${gameState.isCorrect ? 'bg-cartoon-green' : 'bg-cartoon-pink'}`}>
-                <div className="flex items-center mb-3">
+            <div className="mb-4">
+              <div className={`p-2 md:p-3 lg:p-4 rounded-xl border-2 border-black mb-3 
+                ${gameState.isCorrect ? 'bg-cartoon-green' : 'bg-cartoon-pink'}`}>
+                <div className="flex items-center mb-2">
                   {gameState.isCorrect ? (
-                    <div className="flex items-center font-bubblegum text-xl md:text-2xl lg:text-4xl">
-                      <CartoonStar className="w-8 h-8 md:w-10 md:h-10 lg:w-14 lg:h-14 mr-3" />
+                    <div className="flex items-center font-bubblegum text-base md:text-lg lg:text-xl">
+                      <CartoonStar className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 mr-2" />
                       <span>Correct!</span>
                     </div>
                   ) : (
-                    <div className="flex items-center font-bubblegum text-xl md:text-2xl lg:text-4xl">
+                    <div className="flex items-center font-bubblegum text-base md:text-lg lg:text-xl">
                       <span>Oops! Wrong answer!</span>
                     </div>
                   )}
                 </div>
-                <p className="text-black text-base md:text-lg lg:text-2xl">
+                <p className="text-black text-sm md:text-base lg:text-lg">
                   <span className="font-bold">Fun Fact:</span> {gameState.funFact}
                 </p>
               </div>
-              
+
               <button
                 onClick={handleNextQuestion}
-                className={`cartoon-button w-full text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5 
+                className={`cartoon-button w-full text-sm md:text-base lg:text-lg py-2 md:py-3
                   ${gameState.currentQuestionIndex === 9 ? 'bg-cartoon-purple' : 'bg-cartoon-blue'}`}
               >
                 {gameState.currentQuestionIndex === 9 ? 'Show Results' : 'Next Question'}
               </button>
             </div>
           )}
-          
-          <div className="mt-8 pt-6 border-t-4 border-black">
-            {/* Remove the Challenge Friends button here */}
-          </div>
-          
-          <div className="mt-6 text-center">
-            <Link href="/" className="text-blue-600 hover:underline text-base md:text-lg lg:text-xl">
+
+          <div className="mt-4 text-center">
+            <Link href="/" className="text-blue-600 hover:underline text-sm md:text-base lg:text-lg">
               Back to Home
             </Link>
           </div>
