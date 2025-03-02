@@ -11,10 +11,12 @@ export default function PlayPage() {
   const router = useRouter();
   const [playerName, setPlayerName] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const res = await fetch('/api/users', {
@@ -36,6 +38,8 @@ export default function PlayPage() {
       router.push(`/quiz/${data.username}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,9 +79,10 @@ export default function PlayPage() {
             
             <button
               type="submit"
+              disabled={isLoading}
               className="cartoon-button w-full bg-cartoon-yellow text-base md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5"
             >
-              Start Game
+              {isLoading ? 'Creating Player...' : 'Start Game'}
             </button>
           </form>
           

@@ -4,10 +4,9 @@ import { supabase } from '@/lib/supabase';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { challenger_id, score, questions } = body;
+    const { challenger_id, questions } = body;
 
-    // Validate input
-    if (!challenger_id || !Array.isArray(questions) || typeof score !== 'number') {
+    if (!challenger_id || !Array.isArray(questions)) {
       return NextResponse.json(
         { error: 'Invalid challenge data' },
         { status: 400 }
@@ -18,23 +17,18 @@ export async function POST(request: Request) {
       .from('challenges')
       .insert([{
         challenger_id,
-        score,
         questions
       }])
-      .select()
+      .select('id')
       .single();
 
-    if (error) {
-      console.error('Supabase error:', error);
-      throw error;
-    }
+    if (error) throw error;
 
     return NextResponse.json({
       challengeId: challenge.id,
       message: 'Challenge created successfully'
     });
   } catch (error) {
-    console.error('Error creating challenge:', error);
     return NextResponse.json(
       { error: 'Failed to create challenge' },
       { status: 500 }

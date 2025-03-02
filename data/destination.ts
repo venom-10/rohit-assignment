@@ -432,5 +432,260 @@ export const destinations: Destination[] = [
       "Dubrovnik was a wealthy maritime republic rivaling Venice in the Middle Ages.",
       "The city walls are 1.2 miles long and up to 82 feet tall."
     ]
+  },
+  {
+    "questionNo": 26,
+    "city": "Beijing",
+    "country": "China",
+    "clues": [
+      "Home to the Forbidden City and the Great Wall of China.",
+      "Hosted the 2008 Summer Olympics and will host the 2022 Winter Olympics."
+    ],
+    "fun_fact": [
+      "The Forbidden City has 9,999 rooms—one less than the mythical 10,000 rooms of heaven.",
+      "Beijing’s Temple of Heaven is where emperors prayed for good harvests."
+    ],
+    "trivia": [
+      "Beijing means 'Northern Capital' in Chinese.",
+      "The city’s population exceeds 21 million people."
+    ]
+  },
+  {
+    "questionNo": 27,
+    "city": "San Francisco",
+    "country": "USA",
+    "clues": [
+      "Famous for the Golden Gate Bridge and steep, winding Lombard Street.",
+      "Tech hub known for Silicon Valley and historic cable cars."
+    ],
+    "fun_fact": [
+      "Alcatraz Island’s prison once held Al Capone and is now a tourist site.",
+      "San Francisco’s fog has a nickname: 'Karl the Fog.'"
+    ],
+    "trivia": [
+      "The 1906 earthquake destroyed over 80% of the city.",
+      "The Fisherman’s Wharf sea lions arrived after the 1989 earthquake."
+    ]
+  },
+  {
+    "questionNo": 28,
+    "city": "Athens",
+    "country": "Greece",
+    "clues": [
+      "The Acropolis and Parthenon overlook this ancient city.",
+      "Birthplace of democracy and the Olympic Games."
+    ],
+    "fun_fact": [
+      "Athens has over 90 theaters—more than any other city.",
+      "The city’s metro displays ancient artifacts found during construction."
+    ],
+    "trivia": [
+      "Athens is named after Athena, the Greek goddess of wisdom.",
+      "The first modern Olympics were held here in 1896."
+    ]
+  },
+  {
+    "questionNo": 29,
+    "city": "Prague",
+    "country": "Czech Republic",
+    "clues": [
+      "Known for its medieval Astronomical Clock and Charles Bridge.",
+      "The Prague Castle is the largest ancient castle complex in the world."
+    ],
+    "fun_fact": [
+      "The Astronomical Clock has been ticking since 1410!",
+      "Prague’s Lennon Wall is covered in John Lennon-inspired graffiti."
+    ],
+    "trivia": [
+      "Prague is nicknamed 'the City of a Hundred Spires.'",
+      "The Charles Bridge was built in 1357 under King Charles IV."
+    ]
+  },
+  {
+    "questionNo": 30,
+    "city": "Oslo",
+    "country": "Norway",
+    "clues": [
+      "Fram Museum showcases polar exploration ships.",
+      "Hosts the Nobel Peace Prize ceremony annually."
+    ],
+    "fun_fact": [
+      "Oslo’s Vigeland Park has 200+ nude sculptures by Gustav Vigeland.",
+      "The city plans to be car-free by 2030."
+    ],
+    "trivia": [
+      "Oslo means 'Meadow of the Gods' in Old Norse.",
+      "The Holmenkollen Ski Jump offers panoramic city views."
+    ]
+  },
+  {
+    "questionNo": 31,
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "clues": [
+      "Tango dancing originated in this 'Paris of South America.'",
+      "Famous for its colorful La Boca neighborhood and steak."
+    ],
+    "fun_fact": [
+      "Buenos Aires has the most bookstores per capita in the world.",
+      "The Teatro Colón opera house is acoustically perfect."
+    ],
+    "trivia": [
+      "The city’s name means 'Good Airs' in Spanish.",
+      "Evita Perón is buried in Recoleta Cemetery."
+    ]
+  },
+  {
+    "questionNo": 32,
+    "city": "Johannesburg",
+    "country": "South Africa",
+    "clues": [
+      "Economic hub of Africa, known for its gold-mining history.",
+      "Home to Soweto, where Nelson Mandela once lived."
+    ],
+    "fun_fact": [
+      "Johannesburg is one of the world’s largest urban forests.",
+      "The Cradle of Humankind nearby holds ancient hominid fossils."
+    ],
+    "trivia": [
+      "The city’s nickname is 'Joburg' or 'Egoli' (Place of Gold).",
+      "It’s the only city globally not built near a major water source."
+    ]
+  },
+  {
+    "questionNo": 33,
+    "city": "Kyoto",
+    "country": "Japan",
+    "clues": [
+      "Former imperial capital with 2,000+ temples and shrines.",
+      "Famous for cherry blossoms and traditional tea ceremonies."
+    ],
+    "fun_fact": [
+      "Kyoto’s Gion district is known for geisha culture.",
+      "The Golden Pavilion (Kinkaku-ji) is covered in gold leaf."
+    ],
+    "trivia": [
+      "Kyoto avoided WWII bombing due to its cultural significance.",
+      "The Philosopher’s Path is lined with hundreds of cherry trees."
+    ]
+  },
+  {
+    "questionNo": 34,
+    "city": "Chicago",
+    "country": "USA",
+    "clues": [
+      "Nicknamed 'The Windy City' and home to deep-dish pizza.",
+      "Willis Tower (formerly Sears Tower) was once the world’s tallest."
+    ],
+    "fun_fact": [
+      "Chicago reversed its river’s flow to prevent sewage pollution in Lake Michigan.",
+      "The city’s “L” train system runs 24/7."
+    ],
+    "trivia": [
+      "The Great Chicago Fire of 1871 destroyed 3.3 square miles of the city.",
+      "Chicago invented the skyscraper in 1885 with the Home Insurance Building."
+    ]
+  },
+  {
+    "questionNo": 35,
+    "city": "Shanghai",
+    "country": "China",
+    "clues": [
+      "Home to the futuristic Pudong skyline and the Bund waterfront.",
+      "Boasts the world’s fastest train (Maglev) at 267 mph (430 km/h)."
+    ],
+    "fun_fact": [
+      "Shanghai’s Jin Mao Tower has a glass-bottomed observation deck.",
+      "The city’s Disneyland has a TRON Lightcycle Power Run coaster."
+    ],
+    "trivia": [
+      "Shanghai means 'Upon the Sea' in Chinese.",
+      "The city’s port is the busiest container port in the world."
+    ]
+  },
+  {
+    "questionNo": 36,
+    "city": "Venice",
+    "country": "Italy",
+    "clues": [
+      "Built on 118 islands connected by canals and gondolas.",
+      "Hosts the annual Carnival with elaborate masks."
+    ],
+    "fun_fact": [
+      "Venice’s foundations are wooden piles driven into marshy ground.",
+      "The city’s population has dropped from 175,000 (1950s) to 50,000 today."
+    ],
+    "trivia": [
+      "The Rialto Bridge is the oldest bridge over the Grand Canal.",
+      "Venice’s St. Mark’s Basilica holds stolen Byzantine treasures."
+    ]
+  },
+  {
+    "questionNo": 37,
+    "city": "Marrakech",
+    "country": "Morocco",
+    "clues": [
+      "Famous for its bustling Jemaa el-Fnaa square and souks.",
+      "The red-walled city sits at the foot of the Atlas Mountains."
+    ],
+    "fun_fact": [
+      "Marrakech’s name means 'Land of God' in Berber.",
+      "The city has a 700-year-old olive tree grove."
+    ],
+    "trivia": [
+      "The Koutoubia Mosque minaret inspired the Giralda in Seville.",
+      "Majorelle Garden was owned by Yves Saint Laurent."
+    ]
+  },
+  {
+    "questionNo": 38,
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "clues": [
+      "Capital city known for its French colonial architecture and street food.",
+      "Home to Hoan Kiem Lake and the Old Quarter’s '36 Streets.'"
+    ],
+    "fun_fact": [
+      "Hanoi’s Train Street has tracks running inches from homes.",
+      "The city banned motorbikes from its historic center in 2020."
+    ],
+    "trivia": [
+      "Hanoi celebrated its 1,000th birthday in 2010.",
+      "The Temple of Literature is Vietnam’s oldest university."
+    ]
+  },
+  {
+    "questionNo": 39,
+    "city": "Edinburgh",
+    "country": "United Kingdom",
+    "clues": [
+      "Hosts the Fringe Festival, the world’s largest arts festival.",
+      "Edinburgh Castle overlooks the city from an extinct volcano."
+    ],
+    "fun_fact": [
+      "The Royal Mile connects Edinburgh Castle to Holyrood Palace.",
+      "The city has a network of underground vaults rumored to be haunted."
+    ],
+    "trivia": [
+      "Edinburgh’s New Town and Old Town are both UNESCO sites.",
+      "J.K. Rowling wrote *Harry Potter* in Edinburgh cafés."
+    ]
+  },
+  {
+    "questionNo": 40,
+    "city": "Kuala Lumpur",
+    "country": "Malaysia",
+    "clues": [
+      "Home to the Petronas Twin Towers, once the world’s tallest buildings.",
+      "Known for its Batu Caves and vibrant street food scene."
+    ],
+    "fun_fact": [
+      "The Petronas Towers are linked by a skybridge on the 41st floor.",
+      "Kuala Lumpur’s name means 'Muddy Confluence' in Malay."
+    ],
+    "trivia": [
+      "The city’s Batu Caves feature a 140-foot golden statue of Lord Murugan.",
+      "Kuala Lumpur has the world’s largest covered bird park."
+    ]
   }
 ]

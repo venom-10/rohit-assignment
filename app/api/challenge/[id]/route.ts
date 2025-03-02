@@ -10,17 +10,15 @@ interface Challenge {
   createdAt: Date;
 }
 
-// Add type for the join query result
+// Update the interface to match the join
 interface ChallengeWithUser {
   id: string;
-  score: number;
   questions: number[];
   users: {
     username: string;
+    score: number;
   };
 }
-
-const challenges = new Map<string, Challenge>();
 
 export async function GET(
   request: Request,
@@ -33,9 +31,11 @@ export async function GET(
       .from('challenges')
       .select(`
         id,
-        score,
         questions,
-        users!challenger_id (username)
+        users!challenger_id (
+          username,
+          score
+        )
       `)
       .eq('id', challengeId)
       .single() as { data: ChallengeWithUser | null, error: any };
@@ -49,56 +49,13 @@ export async function GET(
 
     return NextResponse.json({
       challenger: challenge.users.username,
-      score: challenge.score,
+      score: challenge.users.score,
       questions: challenge.questions
     });
   } catch (error) {
-    console.error('Error fetching challenge:', error);
     return NextResponse.json(
       { error: 'Failed to fetch challenge' },
       { status: 500 }
     );
   }
 }
-
-// Helper function to create a new challenge
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { challenger_id, score, questions } = body;
-
-    // Validate input
-    if (!challenger_id || !Array.isArray(questions) || typeof score !== 'number') {
-      return NextResponse.json(
-        { error: 'Invalid challenge data' },
-        { status: 400 }
-      );
-    }
-
-    const { data: challenge, error } = await supabase
-      .from('challenges')
-      .insert([{
-        challenger_id,
-        score,
-        questions
-      }])
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Supabase error:', error);
-      throw error;
-    }
-
-    return NextResponse.json({
-      challengeId: challenge.id,
-      message: 'Challenge created successfully'
-    });
-  } catch (error) {
-    console.error('Error creating challenge:', error);
-    return NextResponse.json(
-      { error: 'Failed to create challenge' },
-      { status: 500 }
-    );
-  }
-} 

@@ -37,6 +37,7 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     funFact: '',
     isGameComplete: false
   });
+  const [isCreatingChallenge, setIsCreatingChallenge] = useState(false);
 
   useEffect(() => {
     // Select 10 random destinations
@@ -96,10 +97,32 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     }));
   };
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = async () => {
     const nextIndex = gameState.currentQuestionIndex + 1;
     
     if (nextIndex >= gameState.questions.length) {
+      // Update score when showing results
+      try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) throw new Error('User not found');
+
+        const scoreRes = await fetch('/api/users/score', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId,
+            score: gameState.score
+          })
+        });
+
+        if (!scoreRes.ok) {
+          const data = await scoreRes.json();
+          console.error('Failed to update score:', data.error);
+        }
+      } catch (err) {
+        console.error('Error updating score:', err);
+      }
+
       setGameState(prev => ({ ...prev, isGameComplete: true }));
       return;
     }
@@ -118,21 +141,22 @@ export default function QuizPage({ params }: { params: { username: string } }) {
 
   const handleShareChallenge = async () => {
     try {
+      setIsCreatingChallenge(true);
       const userId = localStorage.getItem('userId');
       if (!userId) throw new Error('User not found');
 
-      const res = await fetch('/api/challenge', {
+      // Create challenge without updating score
+      const challengeRes = await fetch('/api/challenge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           challenger_id: userId,
-          score: gameState.score,
-          questions: gameState.questions.map(q => q.questionNo) // Use questionNo instead of index
+          questions: gameState.questions.map(q => q.questionNo)
         })
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      const data = await challengeRes.json();
+      if (!challengeRes.ok) throw new Error(data.error);
 
       const shareUrl = `${window.location.origin}/challenge/${data.challengeId}`;
       
@@ -141,6 +165,8 @@ export default function QuizPage({ params }: { params: { username: string } }) {
     } catch (err) {
       console.error('Error creating challenge:', err);
       alert('Failed to create challenge. Please try again.');
+    } finally {
+      setIsCreatingChallenge(false);
     }
   };
 
@@ -163,16 +189,24 @@ export default function QuizPage({ params }: { params: { username: string } }) {
           <div className="cartoon-card max-w-md w-full bg-white md:max-w-lg lg:max-w-2xl">
             <div className="text-center mb-8">
               <h1 className="font-bubblegum text-3xl md:text-4xl lg:text-5xl mb-4">Quiz Complete!</h1>
-              <p className="text-xl md:text-2xl lg:text-3xl">
-                Your Score: <span className="font-bold">{gameState.score}/10</span>
-              </p>
+              <div className="bg-cartoon-yellow border-4 border-black rounded-xl p-4 md:p-6 lg:p-8 mb-6">
+                <p className="text-xl md:text-2xl lg:text-3xl font-bold">
+                  Your Score: <span className="font-bubblegum">{gameState.score}/10</span>
+                </p>
+                {gameState.score === 10 && (
+                  <p className="mt-4 text-lg md:text-xl lg:text-2xl">
+                    🎉 Perfect Score! You're a geography genius! 🎉
+                  </p>
+                )}
+              </div>
             </div>
 
             <button
               onClick={handleShareChallenge}
+              disabled={isCreatingChallenge}
               className="cartoon-button w-full bg-cartoon-purple text-base md:text-xl lg:text-2xl py-3 md:py-4 lg:py-5 mb-4"
             >
-              Challenge Friends
+              {isCreatingChallenge ? 'Creating Challenge...' : 'Challenge Friends'}
             </button>
 
             <Link href="/" className="block">
@@ -269,12 +303,7 @@ export default function QuizPage({ params }: { params: { username: string } }) {
           )}
           
           <div className="mt-8 pt-6 border-t-4 border-black">
-            <button
-              onClick={handleShareChallenge}
-              className="cartoon-button w-full bg-cartoon-purple text-base md:text-lg lg:text-2xl py-3 md:py-4 lg:py-5"
-            >
-              Challenge a Friend
-            </button>
+            {/* Remove the Challenge Friends button here */}
           </div>
           
           <div className="mt-6 text-center">
